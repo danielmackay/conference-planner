@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace ConferencePlanner.GraphQL.Mutations
 {
-    public record AddSpeakerInput(string Name, string Bio, string Website);
+    public record AddSpeakerInput(string Name, string? Bio, string? Website);
 }

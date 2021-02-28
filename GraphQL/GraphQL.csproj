@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>ConferencePlanner.GraphQL</AssemblyName>
     <RootNamespace>ConferencePlanner.GraphQL</RootNamespace>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
