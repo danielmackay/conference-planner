@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using ConferencePlanner.GraphQL.Data;
+using ConferencePlanner.GraphQL.Mutations;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +21,13 @@ namespace ConferencePlanner.GraphQL
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=conferences.db"));
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlite("Data Source=conferences.db"));
+
+            services
+                .AddGraphQLServer()
+                .AddQueryType<Query>()
+                .AddMutationType<Mutation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,10 +42,7 @@ namespace ConferencePlanner.GraphQL
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapGraphQL();
             });
         }
     }
