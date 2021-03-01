@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using ConferencePlanner.GraphQL.Data;
+using ConferencePlanner.GraphQL.DataLoader;
 using ConferencePlanner.GraphQL.Mutations;
 
 using Microsoft.AspNetCore.Builder;
@@ -21,13 +22,17 @@ namespace ConferencePlanner.GraphQL
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddPooledDbContextFactory<ApplicationDbContext>(
-                options => options.UseSqlite("Data Source=conferences.db"));
+            services.AddPooledDbContextFactory<ApplicationDbContext>(options => 
+                options
+                    .UseSqlite("Data Source=conferences.db")
+                    .EnableSensitiveDataLogging(false)
+                    .LogTo(Console.WriteLine));
 
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
-                .AddMutationType<Mutation>();
+                .AddMutationType<Mutation>()
+                .AddDataLoader<SpeakerByIdDataLoader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
