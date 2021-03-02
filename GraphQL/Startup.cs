@@ -31,6 +31,7 @@ namespace ConferencePlanner.GraphQL
                 .AddMutationType(d => d.Name("Mutation"))
                     .AddTypeExtension<SpeakerMutations>()
                 .AddType<SpeakerType>()
+                .EnableRelaySupport()
                 .AddDataLoader<SpeakerByIdDataLoader>()
                 .AddDataLoader<SessionByIdDataLoader>();
         }
