@@ -2,12 +2,14 @@
 using ConferencePlanner.GraphQL.Extensions;
 
 using HotChocolate;
+using HotChocolate.Types;
 
 using System.Threading.Tasks;
 
-namespace ConferencePlanner.GraphQL.Mutations
+namespace ConferencePlanner.GraphQL.Speakers
 {
-    public class Mutation
+    [ExtendObjectType(Name = "Mutation")]
+    public class SpeakerMutations
     {
         [UseApplicationDbContext]
         public async Task<AddSpeakerPayload> AddSpeakerAsync(
