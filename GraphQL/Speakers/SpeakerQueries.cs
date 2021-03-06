@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ConferencePlanner.GraphQL.Data;
@@ -7,7 +8,6 @@ using ConferencePlanner.GraphQL.Extensions;
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Relay;
-using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanner.GraphQL
 {
@@ -15,9 +15,10 @@ namespace ConferencePlanner.GraphQL
     public class SpeakerQueries
     {
         [UseApplicationDbContext]
-        public Task<List<Speaker>> GetSpeakers(
+        [UsePaging]
+        public IQueryable<Speaker> GetSpeakers(
             [ScopedService] ApplicationDbContext context) => 
-            context.Speakers.ToListAsync();
+            context.Speakers.OrderBy(t => t.Name);
 
         public Task<Speaker> GetSpeakerByIdAsync(
             [ID(nameof(Speaker))]int id, 
