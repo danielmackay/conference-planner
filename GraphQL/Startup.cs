@@ -1,4 +1,5 @@
 using System;
+using ConferencePlanner.GraphQL.Attendees;
 using ConferencePlanner.GraphQL.Data;
 using ConferencePlanner.GraphQL.DataLoader;
 using ConferencePlanner.GraphQL.Sessions;
@@ -28,10 +29,12 @@ namespace ConferencePlanner.GraphQL
             services
                 .AddGraphQLServer()
                 .AddQueryType(d => d.Name("Query"))
+                    .AddTypeExtension<AttendeeQueries>()
                     .AddTypeExtension<SpeakerQueries>()
                     .AddTypeExtension<SessionQueries>()
                     .AddTypeExtension<TrackQueries>()
                 .AddMutationType(d => d.Name("Mutation"))
+                    .AddTypeExtension<AttendeeMutations>()
                     .AddTypeExtension<SessionMutations>()
                     .AddTypeExtension<SpeakerMutations>()
                     .AddTypeExtension<TrackMutations>()
